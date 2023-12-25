@@ -245,7 +245,7 @@ allElements.forEach(element => {
             document.getElementsByClassName("main")[0].style.overflowX = 'hidden';
 
             const create_main_div = document.createElement("form");
-            create_main_div.action = "http://localhost:3001/delete-account/<%= userData._id %>"
+            create_main_div.action = "https://socio-app-y5og.onrender.com/delete-account/<%= userData._id %>"
             create_main_div.method = "POST";
             create_main_div.style.opacity = "1";
             document.getElementsByTagName("body")[0].style.display = 'flex';
@@ -330,7 +330,7 @@ allElements.forEach(element => {
 });
             document.getElementsByClassName("main")[0].style.opacity = "0";
             const create_main_div = document.createElement("form");
-            create_main_div.action = "http://localhost:3001/create-post"
+            create_main_div.action = "https://socio-app-y5og.onrender.com/create-post"
             create_main_div.method = "POST";
             create_main_div.style.opacity = "1";
             document.getElementsByTagName("body")[0].style.display = 'flex';

@@ -149,17 +149,6 @@ app.post("/delete-account/:id", authenticateUser, async function (req, res) {
   }
 });
 app.get("/home/:id/", authenticateUser, async (req, res) => {
-  const imagePath = "../backend/views/logo.png";
-  var base64Image;
-  fs.readFile(imagePath, (err, imageData) => {
-    if (err) {
-      console.error("Error reading the image file:", err);
-      return res.status(500).send("Error reading image");
-    }
-
-    // Convert image data to base64 format
-    base64Image = Buffer.from(imageData).toString("base64");
-  });
   try {
     const id = req.params.id;
 
@@ -174,7 +163,7 @@ app.get("/home/:id/", authenticateUser, async (req, res) => {
       const userPosts = await Post.find({ "author.userId": id });
 
       console.log(userPosts);
-      res.render("home.ejs", { userData, userPosts, image: base64Image });
+      res.render("home.ejs", { userData, userPosts });
     }
   } catch (error) {
     // Handle other errors (e.g., database connection errors)

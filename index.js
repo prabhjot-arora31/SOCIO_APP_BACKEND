@@ -46,7 +46,7 @@ app.post("/register", async function (req, res) {
         await tmpUser.save();
         console.log(tmpUser);
         res.send(
-          "<center>User registered successfully<br/><a href='http://localhost:3001/login'>Login</a></center>"
+          "<center>User registered successfully<br/><a href='https://socio-app-y5og.onrender.com/login.html'>Login</a></center>"
         );
       }
     });
@@ -64,7 +64,7 @@ app.post("/create-post", async (req, res) => {
     console.log("Post is:" + post);
     await post.save();
     // res.send("Post created successfully");
-    res.redirect("http://localhost:3001/home/" + _id);
+    res.redirect("https://socio-app-y5og.onrender.com/home" + _id);
   } catch (error) {
     res.send("Post has not been created!");
   }
@@ -110,7 +110,9 @@ app.post("/login", async function (req, res) {
           if (isMatch) {
             req.session.user = await user;
             const userData = req.session.user;
-            res.redirect("http://localhost:3001/home/" + userData._id);
+            res.redirect(
+              "https://socio-app-y5og.onrender.com/home/" + userData._id
+            );
             // res.render("home", { userData });
           } else {
             res.send("Login failed");
@@ -141,7 +143,7 @@ app.post("/delete-account/:id", authenticateUser, async function (req, res) {
   console.log("User id to delete:", account_id);
   const user = await User.findOneAndDelete({ _id: account_id });
   if (user) {
-    res.redirect("http://localhost:3001/");
+    res.redirect("https://socio-app-y5og.onrender.com/");
   } else {
     return res.status(404).send("User not found");
   }

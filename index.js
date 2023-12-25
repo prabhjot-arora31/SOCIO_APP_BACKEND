@@ -163,7 +163,7 @@ app.get("/home/:id/", authenticateUser, async (req, res) => {
       const userPosts = await Post.find({ "author.userId": id });
 
       console.log(userPosts);
-      res.render("home.ejs", { userData, userPosts });
+      res.render("Home.ejs", { userData, userPosts });
     }
   } catch (error) {
     // Handle other errors (e.g., database connection errors)

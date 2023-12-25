@@ -110,6 +110,9 @@ app.post("/login", async function (req, res) {
           if (isMatch) {
             req.session.user = await user;
             const userData = req.session.user;
+            // res.redirect(
+            //   "https://socio-app-y5og.onrender.com/home/" + userData._id
+            // );
             res.redirect(
               "https://socio-app-y5og.onrender.com/home/" + userData._id
             );

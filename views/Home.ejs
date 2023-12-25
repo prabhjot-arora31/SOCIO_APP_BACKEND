@@ -22,21 +22,24 @@ header{
 
 }
 .main{
-    width: 80%;
+    width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
-    padding: 20px;
-    gap: 20px;
     align-items: center;
     flex-wrap: wrap;
 }
 .main .right{
-    width: 780px;
+    /* width: calc(100% - 20px); */
+    max-width: 880px;
+    padding: 20px;
+
     overflow-y:auto ;
     height: 550px;
-    margin-left: 20px;
-    border: 2px solid black;
+    margin: 25px;
+    /* margin-left: 20px; */
+    /* border: 2px solid black; */
+    background-color: #F4F2EE;
     scrollbar-width: none; /* For Firefox */
     -ms-overflow-style: none;
 }
@@ -45,7 +48,7 @@ header{
 }
 .main .left{
 
-    width: 300px;
+    width: 300px;margin: 25px;
     background-color: white;
     /* height: 100%; */
 
@@ -126,7 +129,7 @@ span h3{
 @media (max-width:986px)
 {
     .post-data-box{
-        width: 300px;
+        max-width: 300px;
     }
     .main{
         gap: 4rem;
@@ -146,7 +149,52 @@ span h3{
     }
     #creating{
     width: 350px;
-  }
+  } 
+}
+@media (max-width:415px) {
+    .post-data-box{
+        width: 280px;
+    }
+}
+@media (max-width:400px) {
+    .post-data-box{
+        width: 265px;
+    }
+    .small-profile{
+        width: 35px;
+        height: 35px;
+    }
+
+}
+@media (max-width:377px) {
+    .post-data-box{
+        width: 255px;
+    }
+}
+@media (max-width:364px) {
+    .post-data-box{
+        width: 240px;
+    }
+}
+@media (max-width:348px) {
+    .post-data-box{
+        width: 225px;
+    }
+}
+@media (max-width:330px) {
+    .post-data-box{
+        width: 210px;
+    }
+}
+@media (max-width:310px) {
+    .post-data-box{
+        width: 190px;
+    }
+}
+@media (max-width:291px) {
+    .post-data-box{
+        width: 185px;
+    }
 }
    </style>
 </head>
@@ -188,8 +236,8 @@ span h3{
                     </div>
             </div>
             <div class="right">
-                <div class="top">
-                    <div class="small-profile"></div>
+                    <div class="top">
+                    <!-- <div class="small-profile"></div> -->
                     <div id="create-post" style="margin-top: 18px;width: 300px; border: 2px solid gray; cursor: pointer; height: 100%;padding: 0.7rem; border-radius: 20px;">
                         Start a post
                           </div>

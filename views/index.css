@@ -3,6 +3,13 @@
   margin: 0;
   /* color: red; */
 }
+input {
+  padding: 0.34rem;
+}
+input[type="submit"],
+button {
+  font-size: 16.5px;
+}
 header {
   background-color: black;
   color: white;

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+
+       <div class="logo">
+        <img src="logo.png" alt="Logo Image">
+       </div>
+        <h2 style="margin: 0;">
+
+        Socio App
+        </h2>
+     
+    </header>
+   
+<form action="http://localhost:3001/register" method="post">
+    <h2 style="text-align: center;">
+
+        User Registration
+    </h2> 
+<div>
+    <label for="name">Enter Name</label>
+    <input type="text" name="name" id="name" required>
+</div>
+<div>
+    <label for="email">Enter Email</label>
+    <input type="email" name="email" id="email" required>
+</div><div>
+    <label for="password">Enter Password</label>
+    <input type="password" name="password" id="password" required>
+</div><div>
+    <label for="desc">Enter About Yourself</label>
+    <!-- <input type="text" name="name" id="name"> -->
+    <textarea name="desc" id="desc" cols="30" rows="10"></textarea>
+</div>
+<div>
+    <label for="desc">Enter Your Profile URL</label>
+    <!-- <input type="text" name="name" id="name"> -->
+    <input type="text" name="profileImg" id="profileImg">
+</div>
+<div>
+    <input type="submit" value="Register" >
+    <a href="/login.html" style="background-color: black; color: white; text-decoration: none; padding: 0.4rem; ">Login</a>
+</div>
+</form>
+</body>
+</html>

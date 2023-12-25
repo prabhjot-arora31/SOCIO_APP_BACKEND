@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+         <img src="logo.png" alt="Logo Image">
+        </div>
+         <h2 style="margin: 0;">
+ 
+         Socio App
+         </h2>
+      
+     </header>
+   
+<form action="http://localhost:3001/login" method="post">
+    <h2 style="text-align: center;">
+
+        User Login
+    </h2> 
+
+<div>
+    <label for="email">Enter Email</label>
+    <input type="email" name="email" id="email" required>
+</div><div>
+    <label for="password">Enter Password</label>
+    <input type="password" name="password" id="password" required>
+</div><div>
+    <input type="submit" value="Login">
+    <a href="/index.html" style="background-color: black; color: white; text-decoration: none; padding: 0.4rem; ">Register</a>
+
+</div>
+</form>
+</body>
+</html>

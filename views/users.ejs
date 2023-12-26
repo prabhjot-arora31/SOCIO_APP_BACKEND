@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  /* color: red; */
+}
+        .main{
+            max-width: 60%;
+            min-width: 90%;
+            border: 2px solid black;
+            height: 70vh;
+            margin: 0 auto;
+            margin-top: 70px;
+            display: flex;
+            justify-content: center;
+            padding: 0.7rem;
+            gap: 1.12rem;
+            align-items: center;
+            flex-wrap: wrap;
+            border-radius: 20px;
+            overflow-y: auto;
+            scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; 
+  margin-bottom: 30px;
+        }
+        .main::-webkit-scrollbar{
+            display: none;
+        }
+        .user-box{
+            width: 230px;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            padding: 0.85rem;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            border-radius: 20px;
+            border: 2px solid black;
+        }
+        .user-box .img-container{
+            width: 120px;
+            margin: 0;
+            overflow: hidden;
+            border-radius: 50%;
+            height: 120px;
+        }
+        .user-box .img-container img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="text-align: center; margin: 22.1px ;margin-top: 3.5rem; margin-bottom: 0; display: flex; align-items: center ; justify-content: center; gap: 0.7rem; ">
+        <a href="https://socio-app-y5og.onrender.com/home/<%= id %>" style="padding: 0.49rem 0.87rem; border-radius: 7.5px ; text-decoration: none; background-color: black; color: white; "> Home</a>
+<h2>Connect to the Users and increase your network now.</h2>
+
+    </div>
+    <div class="main">
+        <% if (users.length > 0) { %>
+            <% users.forEach(user => { %>
+                <div class="user-box">
+                    <div class="img-container">
+                        <img src="<%= user.profileImg %>" alt="">
+                    </div>
+                    <h3>
+                        <%= user.name %>
+                    </h3>
+                    <% const userRelation = relation.find(rel => rel.followed._id.equals(user._id)); %>
+                    <% if (userRelation) { %>
+                        <button id="<%= user._id %>" onclick="sendRequest('<%= user._id %>')" style="padding: 0.49rem 0.87rem; border-radius: 7.5px; text-decoration: none; cursor: pointer; background-color: black; color: white;">
+                            <%= userRelation.status %>
+                        </button>
+                    <% } else { %>
+                        <button id="<%= user._id %>" onclick="sendRequest('<%= user._id %>')" style="padding: 0.49rem 0.87rem; border-radius: 7.5px; text-decoration: none; cursor: pointer; background-color: black; color: white;">
+                            Connect
+                        </button>
+                    <% } %>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No users found.</p>
+        <% } %>
+    </div>
+    
+                <script>
+                    function sendRequest( user_id) {
+                        var data = {
+                            id:user_id
+                        }
+                        console.log("Yo clicked")
+                        fetch('https://socio-app-y5og.onrender.com/send-request',{
+                            method:'POST',
+                            headers: {
+    'Content-Type': 'application/json', // Set the content type based on your data format
+  },
+                            body:JSON.stringify(data)
+                        }).then(()=>{
+                            document.getElementById(user_id).innerText = 'Pending';
+                        }).catch((err)=>{
+                            // document.getElementById(user_id).innerText = 'Error';
+                            console.log(err)
+                        })
+                    }
+                </script>
+</body>
+</html>

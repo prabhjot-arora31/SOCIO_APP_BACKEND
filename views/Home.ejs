@@ -407,8 +407,21 @@ span h3{
     notificationTab.addEventListener('click', function() {
         if (!notificationsVisible) {
             fetch('https://socio-app-y5og.onrender.com/pending-requests')
+//             [
+//   {
+//     _id: new ObjectId('658c24cd840211897b7b6b89'),
+//     senderId: { _id: new ObjectId('658c20806c3b73d6e6cfa8fa'), name: 'Kartik' },
+//     recipientId: new ObjectId('658c206d6c3b73d6e6cfa8f7'),
+//     type: 'connectionRequest',
+//     message: 'Sent you a connection request',
+//     status: 'Pending',
+//     createdAt: 2023-12-27T13:21:17.610Z,
+//     __v: 0
+//   }
+// ]
                 .then(response => response.json())
                 .then(async data => {
+                    console.log(data)
                     const notificationPanel = document.createElement('div');
                     notificationPanel.className = 'notification-panel';
                     notificationPanel.innerHTML = `
@@ -425,25 +438,25 @@ span h3{
 
                     const notificationsDiv = notificationPanel.querySelector('.notifications');
 
-                    if (data.length === 0) {
-                        const noNotificationElement = document.createElement('p');
-                        noNotificationElement.textContent = 'No new notifications';
-                        notificationsDiv.appendChild(noNotificationElement);
-                    } else {
-                        const userPromises = data.map(notification => {
-                            return fetch(`https://socio-app-y5og.onrender.com/users/${notification.senderId._id}`)
-                                .then(response => response.json());
-                        });
+                    // Prepare an array of promises for user data requests
+                    const userPromises = data.map(notification => {
+                        return fetch(`https://socio-app-y5og.onrender.com/users/${notification.senderId._id}`)
+                            .then(response => response.json());
+                    });
 
-                        const usersData = await Promise.all(userPromises);
-
-                        usersData.forEach((senderData, index) => {
-                            const senderName = senderData.name;
-                            const notificationElement = document.createElement('p');
-                            notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request<br/><div style='margin-top:3px;width:100%;display:flex;gap:0.7rem; justify-content:center'><button style='cursor:pointer;padding:0.35rem;border:none;background-color:black;color:white' onclick='sendRequest("`+senderData._id+`")'>Accept</button><button onclick='sendRequestReject("`+senderData._id+`")' style='cursor:pointer;border:none;padding:0.35rem;background-color:black;color:white'>Reject</button></div></div>`;
-                            notificationsDiv.appendChild(notificationElement);
-                        });
-                    }
+                    // Wait for all promises to resolve
+                    const usersData = await Promise.all(userPromises);
+                  
+                    // Display notifications
+                    usersData.forEach((senderData, index) => {
+                        const senderName = senderData.name;
+                        console.log(senderData._id);
+                        console.log(senderData.status)
+                        const notificationElement = document.createElement('p');
+                        notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request<br/><div style='margin-top:3px;width:100%;display:flex;gap:0.7rem; justify-content:center'><button style='cursor:pointer;padding:0.35rem;border:none;background-color:black;color:white' onclick='sendRequest("`+senderData._id+`")'>Accept</button><button onclick='sendRequestReject("`+senderData._id+`")' style='cursor:pointer;border:none;padding:0.35rem;background-color:black;color:white'>Reject</button></div></div>`;
+                        notificationsDiv.appendChild(notificationElement);
+                    });
+                   
 
                     const closeBtn = notificationPanel.querySelector('.close-btn');
                     closeBtn.addEventListener('click', function() {
@@ -460,7 +473,6 @@ span h3{
         }
     });
 });
-
 // 
       document.getElementById('del-acc').addEventListener('click', function(){
             window.scrollTo({

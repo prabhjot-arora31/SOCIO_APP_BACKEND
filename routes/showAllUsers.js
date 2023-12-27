@@ -18,7 +18,7 @@ router.get("/users", authenticateUser, async (req, res) => {
     const users = await User.find({ _id: { $ne: req.session.user._id } });
     const relation = await relationship
       .find({ follower: req.session.user._id })
-      .populate("followed", "name") // Populate the followed user's name
+      .populate("followed", "name profileImg") // Populate the followed user's name
       .exec();
     res.render(path.join(__dirname, "../views/users.ejs"), {
       users: users,

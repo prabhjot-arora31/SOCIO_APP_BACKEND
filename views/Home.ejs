@@ -441,14 +441,29 @@ span h3{
 
                         usersData.forEach((senderData, index) => {
                             const senderName = senderData.name;
+                            const senderProfile = senderData.profileImg;
                             const status = data[index].status;
                             const notificationElement = document.createElement('p');
 
                             if (status === 'Pending') {
-                                notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request<br/><div style='margin-top:3px;width:100%;display:flex;gap:0.7rem; justify-content:center'><button style='cursor:pointer;padding:0.35rem;border:none;background-color:black;color:white' onclick='sendRequest("${senderData._id}")'>Accept</button><button onclick='sendRequestReject("${senderData._id}")' style='cursor:pointer;border:none;padding:0.35rem;background-color:black;color:white'>Reject</button></div></div>`;
-                            } else {
-                                notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request</div>`;
-                            }
+    const defaultImageURL =' https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png'; // Replace with your default image URL
+    notificationElement.innerHTML = `
+        <div style='display: flex; align-items: center; justify-content: center; margin-bottom: 5.6px; padding: 0.54rem; background-color: lightgray; text-align: center;'>
+            <div style='width: 58px; height: 58px; border-radius: 50px; overflow: hidden;'>
+                <img style='width: 100%' src='${senderProfile}' alt='user profile image' onerror="this.onerror=null;this.src='${defaultImageURL}';"/>
+            </div>
+            <div>
+                ${senderName} sent you a connection request<br/>
+                <div style='margin-top: 3px; width: 100%; display: flex; gap: 0.7rem; justify-content: center;'>
+                    <button style='cursor: pointer; padding: 0.35rem; border: none; background-color: black; color: white;' onclick='sendRequest("${senderData._id}")'>Accept</button>
+                    <button style='cursor: pointer; padding: 0.35rem; border: none; background-color: black; color: white;' onclick='sendRequestReject("${senderData._id}")'>Reject</button>
+                </div>
+            </div>
+        </div>`;
+} else {
+    notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request</div>`;
+}
+
 
                             notificationsDiv.appendChild(notificationElement);
                         });

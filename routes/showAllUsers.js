@@ -20,8 +20,6 @@ router.get("/users", authenticateUser, async (req, res) => {
       .find({ follower: req.session.user._id })
       .populate("followed", "name") // Populate the followed user's name
       .exec();
-    console.log(typeof relation);
-    console.log("Relation is: " + relation);
     res.render(path.join(__dirname, "../views/users.ejs"), {
       users: users,
       id: req.session.user._id,

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
    <style>
     *{
         margin: 0;
@@ -196,6 +198,70 @@ span h3{
         width: 185px;
     }
 }
+/* Notification Tab Styling */
+.notification-tab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9.5px;
+    cursor: pointer;
+    width: 150px; /* Adjust width as needed */
+    background-color: #4CAF50; /* Change to desired background color */
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+}
+
+/* Notification Badge Styling */
+.notification-badge {
+    background-color: red; /* Badge background color */
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+/* Notification Content Styling (Icon or Text) */
+.notification-content img {
+    width: 30px; /* Adjust icon size */
+    height: auto;
+    margin-right: 10px; /* Space between badge and content */
+}
+.notification-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 80%;
+    width: 300px;
+    z-index: 999;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.notification-header span {
+    font-weight: bold;
+}
+
+.close-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
    </style>
 </head>
 <body>
@@ -233,9 +299,9 @@ span h3{
                     <div class="actions">
                         <a href="">Update Profile</a>
                         <a id="del-acc" style="cursor: pointer;">Delete Account</a>
-                        <a href="https://socio-app-y5og.onrender.com/users">Connect to Users</a>
+                        <a href="http://localhost:3001/users">Connect to Users</a>
                         <a href="#">Following</a>
-
+                        <a href="http://localhost:3001/chats">Chats</a>
                     </div>
             </div>
             <div class="right">
@@ -279,10 +345,124 @@ span h3{
                 <% } %>
                 </div>
             </div>
+            <div class="notifications">
+                <div class="notification-tab">
+                    <!-- <div class="notification-badge">3</div> -->
+                    <div class="notification-content" >
+                        <i class="fas fa-bell" style="margin-right: 7px;"></i>Notifications
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
-        document.getElementById('del-acc').addEventListener('click', function(){
+        function sendRequestReject(senderId) {
+    console.log('rejected from', senderId);
+    fetch('http://localhost:3001/reject-connection', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: senderId }),
+    })
+    .then(response => {
+        // Handle the response from the server
+        console.log('Response:', response);
+        // document.href = 'http://localhost:3001/user/<%= userData._id %>'
+        location.reload();
+    })
+    .catch(error => {
+        // Handle errors
+        console.error('Error:', error);
+    });
+}
+
+         function sendRequest(senderId) {
+    console.log('accepted from', senderId);
+    fetch('http://localhost:3001/accept-connection', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: senderId }),
+    })
+    .then(response => {
+        // Handle the response from the server
+        console.log('Response:', response);
+        // document.href = 'http://localhost:3001/user/<%= userData._id %>'
+        location.reload();
+    })
+    .catch(error => {
+        // Handle errors
+        console.error('Error:', error);
+    });
+}
+
+        // Frontend JavaScript code in your EJS file
+        document.addEventListener('DOMContentLoaded', function() {
+    const notificationTab = document.querySelector('.notification-tab');
+    const mainContent = document.querySelector('.main');
+    let notificationsVisible = false;
+
+    notificationTab.addEventListener('click', function() {
+        if (!notificationsVisible) {
+            fetch('http://localhost:3001/pending-requests')
+                .then(response => response.json())
+                .then(async data => {
+                    const notificationPanel = document.createElement('div');
+                    notificationPanel.className = 'notification-panel';
+                    notificationPanel.innerHTML = `
+                        <div class="notification-header">
+                            <span>Notifications</span>
+                            <button class="close-btn">X</button>
+                        </div>
+                        <div class="notifications"></div>
+                    `;
+                    mainContent.style.opacity = '0';
+                    mainContent.style.pointerEvents = 'none';
+                    mainContent.parentElement.appendChild(notificationPanel);
+                    notificationsVisible = true;
+
+                    const notificationsDiv = notificationPanel.querySelector('.notifications');
+
+                    if (data.length === 0) {
+                        const noNotificationElement = document.createElement('p');
+                        noNotificationElement.textContent = 'No new notifications';
+                        notificationsDiv.appendChild(noNotificationElement);
+                    } else {
+                        const userPromises = data.map(notification => {
+                            return fetch(`http://localhost:3001/users/${notification.senderId._id}`)
+                                .then(response => response.json());
+                        });
+
+                        const usersData = await Promise.all(userPromises);
+
+                        usersData.forEach((senderData, index) => {
+                            const senderName = senderData.name;
+                            const notificationElement = document.createElement('p');
+                            notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request<br/><div style='margin-top:3px;width:100%;display:flex;gap:0.7rem; justify-content:center'><button style='cursor:pointer;padding:0.35rem;border:none;background-color:black;color:white' onclick='sendRequest("`+senderData._id+`")'>Accept</button><button onclick='sendRequestReject("`+senderData._id+`")' style='cursor:pointer;border:none;padding:0.35rem;background-color:black;color:white'>Reject</button></div></div>`;
+                            notificationsDiv.appendChild(notificationElement);
+                        });
+                    }
+
+                    const closeBtn = notificationPanel.querySelector('.close-btn');
+                    closeBtn.addEventListener('click', function() {
+                        mainContent.style.opacity = '1';
+                        mainContent.style.pointerEvents = 'auto';
+                        notificationPanel.remove();
+                        notificationsVisible = false;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching pending requests:', error);
+                    // Handle errors if any
+                });
+        }
+    });
+});
+
+// 
+      document.getElementById('del-acc').addEventListener('click', function(){
             window.scrollTo({
         top: 0,
         behavior: 'smooth' // Smooth scrolling behavior

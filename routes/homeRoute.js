@@ -14,16 +14,28 @@ function authenticateUser(req, res, next) {
 router.get("/home/:id/", authenticateUser, async (req, res) => {
   try {
     const id = req.params.id;
+    let userId;
+
+    try {
+      userId = mongoose.Types.ObjectId(id);
+    } catch (error) {
+      // Handle scenario when the provided ID is not a valid ObjectId format
+      res.status(400).send("Invalid user ID format");
+      // or render an error page
+      // res.render('error.ejs', { errorMessage: 'Invalid user ID format' });
+      return;
+    }
+
     console.log("ID IS:", id);
-    const userData = await User.findOne({ _id: id });
+    const userData = await User.findOne({ _id: userId });
     if (!userData) {
       // Handle scenario when user data is not found
       res.status(404).send("User not found");
       // or render an error page
       // res.render('error.ejs', { errorMessage: 'User not found' });
     } else {
-      console.log(id);
-      const userPosts = await Post.find({ "author.userId": id });
+      console.log(userId);
+      const userPosts = await Post.find({ "author.userId": userId });
 
       console.log(userPosts);
       res.render("Home.ejs", { userData, userPosts });

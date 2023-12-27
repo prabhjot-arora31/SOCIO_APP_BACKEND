@@ -299,9 +299,9 @@ span h3{
                     <div class="actions">
                         <a href="">Update Profile</a>
                         <a id="del-acc" style="cursor: pointer;">Delete Account</a>
-                        <a href="http://localhost:3001/users">Connect to Users</a>
+                        <a href="https://socio-app-y5og.onrender.com/users">Connect to Users</a>
                         <a href="#">Following</a>
-                        <a href="http://localhost:3001/chats">Chats</a>
+                        <a href="https://socio-app-y5og.onrender.com/chats">Chats</a>
                     </div>
             </div>
             <div class="right">
@@ -358,7 +358,7 @@ span h3{
     <script>
         function sendRequestReject(senderId) {
     console.log('rejected from', senderId);
-    fetch('http://localhost:3001/reject-connection', {
+    fetch('https://socio-app-y5og.onrender.com/reject-connection', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -379,7 +379,7 @@ span h3{
 
          function sendRequest(senderId) {
     console.log('accepted from', senderId);
-    fetch('http://localhost:3001/accept-connection', {
+    fetch('https://socio-app-y5og.onrender.com/accept-connection', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -406,7 +406,7 @@ span h3{
 
     notificationTab.addEventListener('click', function() {
         if (!notificationsVisible) {
-            fetch('http://localhost:3001/pending-requests')
+            fetch('https://socio-app-y5og.onrender.com/pending-requests')
                 .then(response => response.json())
                 .then(async data => {
                     const notificationPanel = document.createElement('div');
@@ -431,7 +431,7 @@ span h3{
                         notificationsDiv.appendChild(noNotificationElement);
                     } else {
                         const userPromises = data.map(notification => {
-                            return fetch(`http://localhost:3001/users/${notification.senderId._id}`)
+                            return fetch(`https://socio-app-y5og.onrender.com/users/${notification.senderId._id}`)
                                 .then(response => response.json());
                         });
 

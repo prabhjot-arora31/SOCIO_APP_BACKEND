@@ -46,7 +46,9 @@ router.post("/login", async function (req, res) {
             // res.redirect(
             //   "https://socio-app-y5og.onrender.com/home/" + userData._id
             // );
-            res.redirect("http://localhost:3001/home/" + userData._id);
+            res.redirect(
+              "https://socio-app-y5og.onrender.com/home/" + userData._id
+            );
             // res.render("home", { userData });
           } else {
             res.send("Login failed");

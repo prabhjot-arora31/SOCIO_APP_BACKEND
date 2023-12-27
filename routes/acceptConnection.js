@@ -16,7 +16,8 @@ router.post("/accept-connection", async function (req, res) {
       { $set: { status: "Accepted" } },
       { new: true }
     );
-    if (updatedRelationship) res.redirect("http://localhost:3001/home/" + id);
+    if (updatedRelationship)
+      res.redirect("https://socio-app-y5og.onrender.com/home/" + id);
     else return res.status(404).send("Relationship not found");
   } catch (error) {
     console.error("Error accepting connection:", error);

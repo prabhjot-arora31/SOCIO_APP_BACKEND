@@ -14,7 +14,7 @@ function authenticateUser(req, res, next) {
 router.get("/home/:id/", authenticateUser, async (req, res) => {
   try {
     const id = req.params.id;
-
+    console.log("ID IS:", id);
     const userData = await User.findOne({ _id: id });
     if (!userData) {
       // Handle scenario when user data is not found

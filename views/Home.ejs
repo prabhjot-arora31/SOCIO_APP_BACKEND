@@ -368,7 +368,7 @@ span h3{
     .then(response => {
         // Handle the response from the server
         console.log('Response:', response);
-        // document.href = 'http://localhost:3001/user/<%= userData._id %>'
+        // document.href = 'https://socio-app-y5og.onrender.com/user/<%= userData._id %>'
         location.reload();
     })
     .catch(error => {
@@ -389,7 +389,7 @@ span h3{
     .then(response => {
         // Handle the response from the server
         console.log('Response:', response);
-        // document.href = 'http://localhost:3001/user/<%= userData._id %>'
+        // document.href = 'https://socio-app-y5og.onrender.com/user/<%= userData._id %>'
         location.reload();
     })
     .catch(error => {
@@ -407,18 +407,6 @@ span h3{
     notificationTab.addEventListener('click', function() {
         if (!notificationsVisible) {
             fetch('https://socio-app-y5og.onrender.com/pending-requests')
-//             [
-//   {
-//     _id: new ObjectId('658c24cd840211897b7b6b89'),
-//     senderId: { _id: new ObjectId('658c20806c3b73d6e6cfa8fa'), name: 'Kartik' },
-//     recipientId: new ObjectId('658c206d6c3b73d6e6cfa8f7'),
-//     type: 'connectionRequest',
-//     message: 'Sent you a connection request',
-//     status: 'Pending',
-//     createdAt: 2023-12-27T13:21:17.610Z,
-//     __v: 0
-//   }
-// ]
                 .then(response => response.json())
                 .then(async data => {
                     console.log(data)
@@ -438,25 +426,33 @@ span h3{
 
                     const notificationsDiv = notificationPanel.querySelector('.notifications');
 
-                    // Prepare an array of promises for user data requests
-                    const userPromises = data.map(notification => {
-                        return fetch(`https://socio-app-y5og.onrender.com/users/${notification.senderId._id}`)
-                            .then(response => response.json());
-                    });
+                    // Display "No new notifications" if data is empty
+                    if (data.length === 0) {
+                        const noNotificationsElement = document.createElement('p');
+                        noNotificationsElement.textContent = 'No new notifications';
+                        notificationsDiv.appendChild(noNotificationsElement);
+                    } else {
+                        const userPromises = data.map(notification => {
+                            return fetch(`https://socio-app-y5og.onrender.com/user/${notification.senderId._id}`)
+                                .then(response => response.json());
+                        });
 
-                    // Wait for all promises to resolve
-                    const usersData = await Promise.all(userPromises);
-                  
-                    // Display notifications
-                    usersData.forEach((senderData, index) => {
-                        const senderName = senderData.name;
-                        console.log(senderData._id);
-                        console.log(senderData.status)
-                        const notificationElement = document.createElement('p');
-                        notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request<br/><div style='margin-top:3px;width:100%;display:flex;gap:0.7rem; justify-content:center'><button style='cursor:pointer;padding:0.35rem;border:none;background-color:black;color:white' onclick='sendRequest("`+senderData._id+`")'>Accept</button><button onclick='sendRequestReject("`+senderData._id+`")' style='cursor:pointer;border:none;padding:0.35rem;background-color:black;color:white'>Reject</button></div></div>`;
-                        notificationsDiv.appendChild(notificationElement);
-                    });
-                   
+                        const usersData = await Promise.all(userPromises);
+
+                        usersData.forEach((senderData, index) => {
+                            const senderName = senderData.name;
+                            const status = data[index].status;
+                            const notificationElement = document.createElement('p');
+
+                            if (status === 'Pending') {
+                                notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request<br/><div style='margin-top:3px;width:100%;display:flex;gap:0.7rem; justify-content:center'><button style='cursor:pointer;padding:0.35rem;border:none;background-color:black;color:white' onclick='sendRequest("${senderData._id}")'>Accept</button><button onclick='sendRequestReject("${senderData._id}")' style='cursor:pointer;border:none;padding:0.35rem;background-color:black;color:white'>Reject</button></div></div>`;
+                            } else {
+                                notificationElement.innerHTML = `<div style='margin-bottom:5.6px;padding:0.54rem;background-color:lightgray;text-align:center'>${senderName} sent you a connection request</div>`;
+                            }
+
+                            notificationsDiv.appendChild(notificationElement);
+                        });
+                    }
 
                     const closeBtn = notificationPanel.querySelector('.close-btn');
                     closeBtn.addEventListener('click', function() {

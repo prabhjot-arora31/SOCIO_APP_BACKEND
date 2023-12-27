@@ -63,7 +63,7 @@
 <h2>Connect to the Users and increase your network now.</h2>
 
     </div>
-    <div class="main">
+    <div class="main">  
         <% if (users.length > 0) { %>
             <% users.forEach(user => { %>
                 <div class="user-box">
@@ -96,7 +96,7 @@
                             id:user_id
                         }
                         console.log("Yo clicked")
-                        fetch('http://localhost:3001/send-request',{
+                        fetch('https://socio-app-y5og.onrender.com/send-request',{
                             method:'POST',
                             headers: {
     'Content-Type': 'application/json', // Set the content type based on your data format

@@ -32,6 +32,7 @@ app.use("/", require("./routes/showAllUsers"));
 app.use("/", require("./routes/connectionRequestRoute"));
 app.use("/", require("./routes/chatsRoute"));
 app.use("/", require("./routes/pendingRequest"));
+// app.use("/", require("./routes/fetchingUserDataForConnectionRequest"));
 app.use("/", require("./routes/fetchingUserDataForConnectionRequest"));
 app.use("/", require("./routes/acceptConnection"));
 app.use("/", require("./routes/rejectConnection"));

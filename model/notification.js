@@ -23,7 +23,7 @@ const notificationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "unread", // You can set default status as 'unread', for example
+    default: "Pending", // You can set default status as 'unread', for example
   },
   createdAt: {
     type: Date,

@@ -50,7 +50,7 @@ function initializeSocket(server) {
       try {
         await chat.save();
        // io.to(roomID).emit("message", chat);
-        chatsIO.broadcast.to(roomID).emit("message", chat);
+        socket.broadcast.to(roomID).emit("message", chat);
       } catch (error) {
         console.error("Error saving chat:", error);
       }

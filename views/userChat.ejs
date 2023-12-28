@@ -249,7 +249,14 @@ function getProfilePicOfReceiver(){
         getProfilePicOfReceiver();
 const chatArea = document.querySelector('.chat-area');
         const socket = io('/chats/<%= chatId %>'); // Connect to Socket.IO server
-        socket.on('previous-messages', (data) => {
+      socket.on('message',(dataFromServer)=>{
+console.log('RECEIVING RTM')
+            chatArea.innerHTML += ` <div class="message received">
+                <p>${dataFromServer}</p>
+                     </div>`;
+                     scrollToBottom();
+        })
+socket.on('previous-messages', (data) => {
   console.log('PM: ', data);
   if (data.length > 0) {
     data.forEach((item) => {
@@ -270,19 +277,9 @@ const chatArea = document.querySelector('.chat-area');
   }
   scrollToBottom();
 });
-socket.on('message',(dataMsg)=>{
-console.log('CLIENT RECEIVED THE MESSAGE');
-chatArea.innerHTML += `<div class="message received">
-                <p>${dataMsg}</p>
-                     </div>`;
-})
+
 socket.emit('joinRoom',extractedInfo2+extractedInfo);
-        socket.on('message',(dataFromServer)=>{
-            chatArea.innerHTML += ` <div class="message received">
-                <p>${dataFromServer}</p>
-                     </div>`;
-                     scrollToBottom();
-        })
+        
         function personalChat(chatWithWhomId)
         {
             withWhomId = chatWithWhomId;

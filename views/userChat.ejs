@@ -270,6 +270,11 @@ const chatArea = document.querySelector('.chat-area');
   }
   scrollToBottom();
 });
+socket.on('message',(dataMsg)=>{
+chatArea.innerHTML += `<div class="message received">
+                <p>${dataMsg}</p>
+                     </div>`;
+})
 socket.emit('joinRoom',extractedInfo2+extractedInfo);
         socket.on('message',(dataFromServer)=>{
             chatArea.innerHTML += ` <div class="message received">

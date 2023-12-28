@@ -47,14 +47,12 @@ function initializeSocket(server) {
         roomId: roomID,
       });
 
-      try {
+      
         await chat.save();
         console.log('FROM MESSAGE EVENT, SAVED MESSAGE SUCCESSFUL ');
        // io.to(roomID).emit("message", chat);
         socket.broadcast.to(roomID).emit("message", chat);
-      } catch (error) {
-        console.error("Error saving chat:", error);
-      }
+      
     });
 
     socket.on("disconnect", () => {

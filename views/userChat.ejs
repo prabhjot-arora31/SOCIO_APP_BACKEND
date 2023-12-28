@@ -287,8 +287,8 @@ socket.emit('joinRoom',extractedInfo2+extractedInfo);
             location.href = 'https://socio-app-y5og.onrender.com/chats/<%= id %>cHaT'+chatWithWhomId;
         }
         socket.emit('private-message',{receiver:extractedInfo,sender:extractedInfo2});
-        function sendMsg(e) {
-e.preventDefault();
+        function sendMsg() {
+//e.preventDefault();
 
             const messageInput = document.getElementById("message").value;
             console.log(messageInput);

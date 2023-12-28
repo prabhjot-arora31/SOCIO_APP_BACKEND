@@ -52,7 +52,7 @@ function initializeSocket(server) {
       console.log("Just for updating");
       // io.to(roomID).emit("message", chat);
       await chat.save();
-      socket.broadcast.to(roomID).emit("message", { message: message });
+      socket.broadcast.to(roomID).emit("message", chat);
       //  socket.write();
     });
 

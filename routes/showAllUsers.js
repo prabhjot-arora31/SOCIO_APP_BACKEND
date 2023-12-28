@@ -20,6 +20,8 @@ router.get("/users", authenticateUser, async (req, res) => {
       .find({ follower: req.session.user._id })
       .populate("followed", "name profileImg") // Populate the followed user's name
       .exec();
+    console.log("from showAllUsers.js:", users);
+
     res.render(path.join(__dirname, "../views/users.ejs"), {
       users: users,
       id: req.session.user._id,

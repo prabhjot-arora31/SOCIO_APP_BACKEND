@@ -36,6 +36,8 @@ app.use("/", require("./routes/pendingRequest"));
 app.use("/", require("./routes/fetchingUserDataForConnectionRequest"));
 app.use("/", require("./routes/acceptConnection"));
 app.use("/", require("./routes/rejectConnection"));
+app.use("/", require("./routes/userChat"));
+app.use("/", require("./routes/profilePicById"));
 httpServer.listen(3001, () => {
   console.log("Listening on the port 3001");
 });

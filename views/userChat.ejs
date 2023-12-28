@@ -141,7 +141,12 @@ header{
             display: flex;
             justify-content: center;
         }
-     
+        @media screen and  (max-width: 470px) {
+            .right{
+                display: none;
+                flex: 0;
+            }
+        }
     /* Media query for smaller screens */
     @media screen and (max-width: 768px) {
             .main {
@@ -178,13 +183,13 @@ header{
         </h2>
         <h4>
 
-            <a style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="https://socio-app-y5og.onrender.com/home/<%= id %>">Home</a>
+            <a style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="https://socio-app-y5og.onrender.com/chats/">All Chats</a>
         </h4>
     </header>
     <div class="main">
         <div class="left">
             <% user.forEach((item) => { %>
-                <div class="box" onclick="personalChat('<%= item._id  %>')">
+                <div class="box" onclick="personalChat('<%= item._id %>')">
                     <div style="width: 60px;overflow: hidden; border-radius: 50%; height: 60px; ">
                         <img src="<%= item.profileImg %>" style="width: 100%;" alt="">
                     </div>
@@ -193,31 +198,107 @@ header{
                 <!-- Display other properties as needed -->
             <% }); %>
         </div>
-       <div class="right" style="display: flex;justify-content: center; align-items: center; ">
-        <img src="/secured.png" style="width: 140px;" alt="">
-       <p style="text-align: center;">
-
-           You are Using the Socio App Chat Services. Your messages are end-to-end encrypted. <br />
-       </p>
-        <a href="#" style="font-size: 13.76px; color: blue; text-decoration: none; font-weight: 500; ">Know more</a>
-       </div>
+        <div class="right">
+            <div class="profilePicOfReceiver">
+               
+            </div>
+            <!-- Chat area -->
+            <div class="chat-area">
+                <!-- Messages go here -->               
+                <!-- More messages -->
+            </div>
+            
+            <!-- Input area -->
+            <div class="input-area">
+                <input id="message" type="text" style="padding: 0.75rem;" placeholder="Type your message">
+                <button style="padding: 0.75rem;" onclick="sendMsg()">Send</button>
+            </div>
+        </div>
+       
     </div>
     
    
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
     <script>
+       
+        const searchTerm = 'cHaT';
+const fullPath = window.location.pathname;
+const index = fullPath.indexOf(searchTerm);
+let extractedInfo 
+if (index !== -1) {
+   extractedInfo = fullPath.substring(index + searchTerm.length);
+   extractedInfo2 = fullPath.substring(7,fullPath.indexOf('cHaT'));
+   console.log(extractedInfo2)
+  console.log(extractedInfo); // This will log '658d29776efa0c2255cd1b7f'
+} else {
+  console.log('Search term not found');
+}
+function scrollToBottom() {
+  const messagesContainer = document.querySelector('.chat-area');
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+function getProfilePicOfReceiver(){
+            fetch('https://socio-app-y5og.onrender.com/getProfilePic/'+extractedInfo).then((data)=>{
+            //   console.log('DATA IS HERE:', data.json())
+            return data.json();
+            }).then((data)=>{
+                console.log(data.pic)
+                document.querySelector('.profilePicOfReceiver').innerHTML = `<div style='width:130px ; border-radius:50%;margin:0 auto;overflow:hidden;height:130px'><img style='width:100%' src='${data.pic}' alt='Profile Pic'/></div>`;
+            })
+        }
+        getProfilePicOfReceiver();
+const chatArea = document.querySelector('.chat-area');
+        const socket = io('/chats/<%= chatId %>'); // Connect to Socket.IO server
+        socket.on('previous-messages', (data) => {
+  console.log('PM: ', data);
+  if (data.length > 0) {
+    data.forEach((item) => {
+      if (item.sender === extractedInfo) {
+        // Message sent by the user whose profile is being viewed (receiver)
+        chatArea.innerHTML += `
+          <div class="message received">
+            <p>${item.message}</p>
+          </div>`;
+      } else if (item.sender === extractedInfo2) {
+        // Message sent by the logged-in user (sender)
+        chatArea.innerHTML += `
+          <div class="message sent">
+            <p>${item.message}</p>
+          </div>`;
+      }
+    });
+  }
+  scrollToBottom();
+});
+socket.emit('joinRoom',extractedInfo2+extractedInfo);
+        socket.on('message',(dataFromServer)=>{
+            chatArea.innerHTML += ` <div class="message received">
+                <p>${dataFromServer}</p>
+                     </div>`;
+                     scrollToBottom();
+        })
         function personalChat(chatWithWhomId)
         {
+            withWhomId = chatWithWhomId;
             console.log("PersonalChat")
             location.href = 'https://socio-app-y5og.onrender.com/chats/<%= id %>cHaT'+chatWithWhomId;
         }
-        const socket = io('/chats'); // Connect to Socket.IO server
-        data = 'Hello man';
-        if(data !== '')
-        socket.emit('message',data);
-        socket.on('message',(dataFromServer)=>{
-            console.log(dataFromServer)
-        })
+        socket.emit('private-message',{receiver:extractedInfo,sender:extractedInfo2});
+        function sendMsg() {
+            const messageInput = document.getElementById("message").value;
+            console.log(messageInput);
+            document.getElementById("message").value = '';
+            chatArea.innerHTML += ` <div class="message sent">
+                <p>${messageInput}</p>
+                     </div>`;
+        console.log('Chat ID from server is returned: <%= chatId %>');
+        if(messageInput !== '')
+        socket.emit('message',messageInput);
+    scrollToBottom();
+        }
+        
+      
+       
     </script>
 </body>
 </html>

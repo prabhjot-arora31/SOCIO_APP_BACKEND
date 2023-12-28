@@ -49,6 +49,7 @@ function initializeSocket(server) {
 
       try {
         await chat.save();
+        console.log('FROM MESSAGE EVENT, SAVED MESSAGE SUCCESSFUL ');
        // io.to(roomID).emit("message", chat);
         socket.broadcast.to(roomID).emit("message", chat);
       } catch (error) {

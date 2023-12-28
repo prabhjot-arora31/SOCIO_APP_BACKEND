@@ -51,8 +51,8 @@ function initializeSocket(server) {
       console.log("FROM MESSAGE EVENT, SAVED MESSAGE SUCCESSFUL ");
       console.log("Just for updating");
       // io.to(roomID).emit("message", chat);
-      socket.broadcast.to(roomID).emit("message", { message: message });
       await chat.save();
+      socket.broadcast.to(roomID).emit("message", { message: message });
       //  socket.write();
     });
 

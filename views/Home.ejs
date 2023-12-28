@@ -449,12 +449,12 @@ span h3{
     const defaultImageURL =' https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png'; // Replace with your default image URL
     notificationElement.innerHTML = `
         <div style='display: flex; justify-content: center; margin-bottom: 5.6px; padding: 0.54rem; background-color: #F5FEFD; text-align: left;'>
-            <div style='width: 58px; margin-right:'5.5px'; height: 58px; border-radius: 50px; overflow: hidden;'>
+            <div style='width: 58px; margin-right:5.5px; height: 58px; border-radius: 50px; overflow: hidden;'>
                 <img style='width: 100%' src='${senderProfile}' alt='user profile image' onerror="this.onerror=null;this.src='${defaultImageURL}';"/>
             </div>
             <div>
                 ${senderName} sent you a connection request<br/>
-                <div style='margin-top: 3px; width: 100%; display: flex; gap: 0.7rem; justify-content: center;'>
+                <div style='margin-top: 3px; width: 100%; display: flex; gap: 0.7rem; justify-content: left;'>
                     <button style='cursor: pointer; padding: 0.35rem; border: none; background-color: green; color: white;' onclick='sendRequest("${senderData._id}")'>Accept</button>
                     <button style='cursor: pointer; padding: 0.35rem; border: none; background-color: red; color: white;' onclick='sendRequestReject("${senderData._id}")'>Reject</button>
                 </div>

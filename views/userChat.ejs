@@ -271,6 +271,7 @@ const chatArea = document.querySelector('.chat-area');
   scrollToBottom();
 });
 socket.on('message',(dataMsg)=>{
+console.log('CLIENT RECEIVED THE MESSAGE');
 chatArea.innerHTML += `<div class="message received">
                 <p>${dataMsg}</p>
                      </div>`;

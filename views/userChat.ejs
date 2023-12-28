@@ -252,7 +252,7 @@ const chatArea = document.querySelector('.chat-area');
       socket.on('message',(dataFromServer)=>{
 console.log('RECEIVING RTM')
             chatArea.innerHTML += ` <div class="message received">
-                <p>${dataFromServer}</p>
+                <p>${dataFromServer.message}</p>
                      </div>`;
                      scrollToBottom();
         })

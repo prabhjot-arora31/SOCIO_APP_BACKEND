@@ -50,9 +50,9 @@ function initializeSocket(server) {
 
       // Emit message to the room before saving it to the database
       socket.to(roomID).emit("message", chat);
-
+console.log('DIFFERENT WORLD');
       try {
-      //  await chat.save();
+       await chat.save();
         console.log("Message saved successfully");
       } catch (error) {
         console.error("Error saving message:", error);

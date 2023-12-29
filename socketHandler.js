@@ -1,5 +1,6 @@
 const socketIO = require("socket.io");
 const Chat = require("./model/chats");
+
 function initializeSocket(server) {
   const io = socketIO(server);
 
@@ -47,13 +48,15 @@ function initializeSocket(server) {
         roomId: roomID,
       });
 
-      // await chat.save();
-      console.log("FROM MESSAGE EVENT, SAVED MESSAGE SUCCESSFUL ");
-      console.log("Just for updating");
-      // io.to(roomID).emit("message", chat);
-      await chat.save();
-      socket.broadcast.to(roomID).emit("message", chat);
-      //  socket.write();
+      // Emit message to the room before saving it to the database
+      socket.to(roomID).emit("message", chat);
+
+      try {
+        await chat.save();
+        console.log("Message saved successfully");
+      } catch (error) {
+        console.error("Error saving message:", error);
+      }
     });
 
     socket.on("disconnect", () => {

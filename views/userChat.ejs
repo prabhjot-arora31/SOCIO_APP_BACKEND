@@ -220,90 +220,86 @@ header{
    
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
     <script>
-       
-        const searchTerm = 'cHaT';
-const fullPath = window.location.pathname;
-const index = fullPath.indexOf(searchTerm);
-let extractedInfo 
-if (index !== -1) {
-   extractedInfo = fullPath.substring(index + searchTerm.length);
-   extractedInfo2 = fullPath.substring(7,fullPath.indexOf('cHaT'));
-   console.log(extractedInfo2)
-  console.log(extractedInfo); // This will log '658d29776efa0c2255cd1b7f'
-} else {
-  console.log('Search term not found');
-}
-function scrollToBottom() {
-  const messagesContainer = document.querySelector('.chat-area');
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-function getProfilePicOfReceiver(){
-            fetch('https://socio-app-y5og.onrender.com/getProfilePic/'+extractedInfo).then((data)=>{
-            //   console.log('DATA IS HERE:', data.json())
-            return data.json();
-            }).then((data)=>{
-                console.log(data.pic)
-                document.querySelector('.profilePicOfReceiver').innerHTML = `<div style='width:130px ; border-radius:50%;margin:0 auto;overflow:hidden;height:130px'><img style='width:100%' src='${data.pic}' alt='Profile Pic'/></div>`;
-            })
-        }
-        getProfilePicOfReceiver();
-const chatArea = document.querySelector('.chat-area');
-        const socket = io('/chats/<%= chatId %>'); // Connect to Socket.IO server
-      socket.on('message',(dataFromServer)=>{
-console.log('RECEIVING RTM')
-            chatArea.innerHTML += ` <div class="message received">
+    // Function to scroll to the bottom of the chat area
+    function scrollToBottom() {
+        const messagesContainer = document.querySelector('.chat-area');
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Function to retrieve the receiver's profile picture
+    function getProfilePicOfReceiver() {
+        // Assuming the API endpoint is correct; replace 'extractedInfo' with the actual receiver ID
+        fetch('https://socio-app-y5og.onrender.com/getProfilePic/' + extractedInfo)
+            .then((data) => data.json())
+            .then((data) => {
+                console.log(data.pic);
+                document.querySelector('.profilePicOfReceiver').innerHTML = `
+                    <div style='width:130px; border-radius:50%;margin:0 auto;overflow:hidden;height:130px'>
+                        <img style='width:100%' src='${data.pic}' alt='Profile Pic'/>
+                    </div>`;
+            });
+    }
+
+    // Function to handle the reception of new messages from the server
+    const chatArea = document.querySelector('.chat-area');
+    const socket = io('/chats/<%= chatId %>');
+
+    socket.on('message', (dataFromServer) => {
+        console.log('RECEIVING RTM');
+        chatArea.innerHTML += `
+            <div class="message received">
                 <p>${dataFromServer.message}</p>
-                     </div>`;
-                     scrollToBottom();
-        })
-socket.on('previous-messages', (data) => {
-  console.log('PM: ', data);
-  if (data.length > 0) {
-    data.forEach((item) => {
-      if (item.sender === extractedInfo) {
-        // Message sent by the user whose profile is being viewed (receiver)
-        chatArea.innerHTML += `
-          <div class="message received">
-            <p>${item.message}</p>
-          </div>`;
-      } else if (item.sender === extractedInfo2) {
-        // Message sent by the logged-in user (sender)
-        chatArea.innerHTML += `
-          <div class="message sent">
-            <p>${item.message}</p>
-          </div>`;
-      }
+            </div>`;
+        scrollToBottom();
     });
-  }
-  scrollToBottom();
-});
 
-socket.emit('joinRoom',extractedInfo2+extractedInfo);
-        
-        function personalChat(chatWithWhomId)
-        {
-            withWhomId = chatWithWhomId;
-            console.log("PersonalChat")
-            location.href = 'https://socio-app-y5og.onrender.com/chats/<%= id %>cHaT'+chatWithWhomId;
+    // Function to display previous messages on loading the chat
+    socket.on('previous-messages', (data) => {
+        console.log('PM: ', data);
+        if (data.length > 0) {
+            data.forEach((item) => {
+                // Assuming 'extractedInfo' and 'extractedInfo2' contain the correct user IDs
+                if (item.sender === extractedInfo) {
+                    chatArea.innerHTML += `
+                        <div class="message received">
+                            <p>${item.message}</p>
+                        </div>`;
+                } else if (item.sender === extractedInfo2) {
+                    chatArea.innerHTML += `
+                        <div class="message sent">
+                            <p>${item.message}</p>
+                        </div>`;
+                }
+            });
         }
-        socket.emit('private-message',{receiver:extractedInfo,sender:extractedInfo2});
-        function sendMsg() {
-//e.preventDefault();
+        scrollToBottom();
+    });
 
-            const messageInput = document.getElementById("message").value;
-            console.log(messageInput);
-            document.getElementById("message").value = '';
-            chatArea.innerHTML += ` <div class="message sent">
+    // Joining the room for the chat
+    socket.emit('joinRoom', extractedInfo2 + extractedInfo);
+
+    // Emitting a private message to initiate the chat
+    socket.emit('private-message', { receiver: extractedInfo, sender: extractedInfo2 });
+
+    // Function to send a message
+    function sendMsg() {
+        const messageInput = document.getElementById("message").value;
+        console.log(messageInput);
+        document.getElementById("message").value = '';
+
+        // Only emit the message if it's not empty
+        if (messageInput !== '') {
+            socket.emit('message', messageInput);
+        }
+
+        // Assuming that message sending should occur only after a successful emission
+        chatArea.innerHTML += `
+            <div class="message sent">
                 <p>${messageInput}</p>
-                     </div>`;
-        console.log('Chat ID from server is returned: <%= chatId %>');
-        if(messageInput !== '')
-        socket.emit('message',messageInput);
-    scrollToBottom();
-        }
-        
-      
-       
-    </script>
+            </div>`;
+        scrollToBottom();
+    }
+</script>
+
 </body>
 </html>

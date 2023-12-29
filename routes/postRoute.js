@@ -13,7 +13,7 @@ router.post("/create-post", async (req, res) => {
     console.log("Post is:" + post);
     await post.save();
     // res.send("Post created successfully");
-    res.redirect("http://localhost:3001/home/" + _id);
+    res.redirect("https://socio-app-y5og.onrender.com/home/" + _id);
   } catch (error) {
     res.send("Post has not been created!");
   }

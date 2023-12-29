@@ -52,7 +52,7 @@ function initializeSocket(server) {
       socket.to(roomID).emit("message", chat);
 
       try {
-        await chat.save();
+      //  await chat.save();
         console.log("Message saved successfully");
       } catch (error) {
         console.error("Error saving message:", error);

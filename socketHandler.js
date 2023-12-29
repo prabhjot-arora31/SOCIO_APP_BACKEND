@@ -47,7 +47,7 @@ function initializeSocket(server) {
         receiver: receiverID,
         roomId: roomID,
       });
-
+console.log('DIFFERENT WORLD 2');
       // Emit message to the room before saving it to the database
       socket.to(roomID).emit("message", chat);
 console.log('DIFFERENT WORLD');

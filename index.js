@@ -38,6 +38,7 @@ app.use("/", require("./routes/acceptConnection"));
 app.use("/", require("./routes/rejectConnection"));
 app.use("/", require("./routes/userChat"));
 app.use("/", require("./routes/profilePicById"));
+app.use("/", require("./routes/chatReceiver"));
 httpServer.listen(3001, () => {
   console.log("Listening on the port 3001");
 });

@@ -7,7 +7,8 @@ router.get("/getProfilePic/:id", async (req, res) => {
   const user = await User.findById(id);
   if (user) {
     const profilePic = user.profileImg;
-    res.json({ pic: profilePic });
+    const name = user.name;
+    res.json({ pic: profilePic, name: name });
   } else {
     res.json({ error: "error" });
   }

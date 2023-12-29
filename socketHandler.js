@@ -26,9 +26,13 @@ function initializeSocket(server) {
 
       try {
         // Fetch previous messages from the database for this roomID
-        const chats = await Chat.find({ roomId: roomID }).sort({
-          timestamp: 1,
-        });
+        const chats = await Chat.find({
+          $or: [
+            { sender: senderID, receiver: receiverID },
+            { sender: receiverID, receiver: senderID },
+          ],
+        }).sort({ timestamp: 1 });
+
         console.log("PM: ", chats);
         // Emit previous messages to the client
         socket.emit("previous-messages", chats);
@@ -37,33 +41,15 @@ function initializeSocket(server) {
       }
     });
 
-    socket.on("message", async (message) => {
-      console.log(message);
-
-      const chat = new Chat({
-        message: message,
-        timestamp: Date.now(),
-        sender: senderID,
-        receiver: receiverID,
-        roomId: roomID,
-      });
-console.log('DIFFERENT WORLD 2');
-      // Emit message to the room before saving it to the database
-      socket.to(roomID).emit("message", chat);
-console.log('DIFFERENT WORLD');
-      try {
-       await chat.save();
-        console.log("Message saved successfully");
-      } catch (error) {
-        console.error("Error saving message:", error);
-      }
-    });
-
     socket.on("disconnect", () => {
       console.log("User disconnected");
     });
 
     // Handle other events or logic here
+    socket.on("newChat", (data) => {
+      console.log("newChat:", data);
+      chatsIO.emit("loadNewChat", data);
+    });
   });
 }
 

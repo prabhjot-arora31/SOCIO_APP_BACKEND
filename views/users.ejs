@@ -59,7 +59,7 @@
 <body>
 
     <div style="text-align: center; margin: 22.1px ;margin-top: 3.5rem; margin-bottom: 0; display: flex; align-items: center ; justify-content: center; gap: 0.7rem; ">
-        <a href="https://socio-app-y5og.onrender.com/home/<%= id %>" style="padding: 0.49rem 0.87rem; border-radius: 7.5px ; text-decoration: none; background-color: black; color: white; "> Home</a>
+        <a href="http://localhost:3001/home/<%= id %>" style="padding: 0.49rem 0.87rem; border-radius: 7.5px ; text-decoration: none; background-color: black; color: white; "> Home</a>
 <h2>Connect to the Users and increase your network now.</h2>
 
     </div>
@@ -98,7 +98,7 @@
                             id:user_id
                         }
                         console.log("Yo clicked")
-                        fetch('https://socio-app-y5og.onrender.com/send-request',{
+                        fetch('http://localhost:3001/send-request',{
                             method:'POST',
                             headers: {
     'Content-Type': 'application/json', // Set the content type based on your data format

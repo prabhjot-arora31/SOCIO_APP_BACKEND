@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Chat</title>
     <style>
+        .timestamp{
+            font-weight: lighter;
+            font-size: 9.5px;
+        }
         
         * {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -32,9 +36,9 @@ header{
             max-width: 60%;
             min-width: 90%;
             background-color: #706ee3;
-            height: 70vh;
+            height: 90vh;
             margin: 0 auto;
-            margin-top: 70px;
+            margin-top: 30px;
             display: flex;
             justify-content: center;
             padding: 0.7rem;
@@ -108,7 +112,7 @@ header{
         }
 
         .input-area {
-            display: flex;
+            /* display: flex; */
             align-items: center;
             margin-top: 20px;
         }
@@ -183,7 +187,7 @@ header{
         </h2>
         <h4>
 
-            <a style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="https://socio-app-y5og.onrender.com/chats/">All Chats</a>
+            <a style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="http://localhost:3001/chats/">All Chats</a>
         </h4>
     </header>
     <div class="main">
@@ -199,7 +203,8 @@ header{
             <% }); %>
         </div>
         <div class="right">
-            <div class="profilePicOfReceiver">
+            
+            <div class="profilePicOfReceiver" style="margin-bottom: 10px; padding: 4px ;border-bottom: 2px solid black;">
                
             </div>
             <!-- Chat area -->
@@ -209,10 +214,17 @@ header{
             </div>
             
             <!-- Input area -->
-            <div class="input-area">
-                <input id="message" type="text" style="padding: 0.75rem;" placeholder="Type your message">
-                <button style="padding: 0.75rem;" onclick="sendMsg()">Send</button>
-            </div>
+            
+                <div style="display: flex; gap: 10px;">
+                    <input style="flex: 1;" required id="message" type="text" style="padding: 0.75rem;" placeholder="Type your message">
+                    
+                    <button onclick="submit()" style="padding: 0.75rem; cursor: pointer; background-color: green; color: white; border: none; border-radius: 7px;">
+                        <span id="buttonContent">Send</span>
+                        <span id="loader" style="display: none;">&#9696;</span> <!-- Loader icon -->
+                    
+                    </button>
+                </div>
+            
         </div>
        
     </div>
@@ -238,12 +250,14 @@ function scrollToBottom() {
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 function getProfilePicOfReceiver(){
-            fetch('https://socio-app-y5og.onrender.com/getProfilePic/'+extractedInfo).then((data)=>{
+            fetch('http://localhost:3001/getProfilePic/'+extractedInfo).then((data)=>{
             //   console.log('DATA IS HERE:', data.json())
             return data.json();
             }).then((data)=>{
                 console.log(data.pic)
-                document.querySelector('.profilePicOfReceiver').innerHTML = `<div style='width:130px ; border-radius:50%;margin:0 auto;overflow:hidden;height:130px'><img style='width:100%' src='${data.pic}' alt='Profile Pic'/></div>`;
+                document.querySelector('.profilePicOfReceiver').innerHTML = `<div style='display:flex;gap:20px;justify-content:center;margin-left:auto;margin-right:auto;align-items:center'><div style='width:85px ; border-bottom:1px solid black ; border-radius:50%;overflow:hidden;height:85px'><img style='width:100%' src='${data.pic}' alt='Profile Pic'/></div>
+             <h2>${data.name}</h2>   </div>
+                `;
             })
         }
         getProfilePicOfReceiver();
@@ -265,12 +279,14 @@ socket.on('previous-messages', (data) => {
         chatArea.innerHTML += `
           <div class="message received">
             <p>${item.message}</p>
+            <span class='timestamp'>${timestampConverter(item.timestamp)}</span>
           </div>`;
 } else if (item.sender === extractedInfo2) {
         // Message sent by the logged-in user (sender)
         chatArea.innerHTML += `
           <div class="message sent">
             <p>${item.message}</p>
+            <span class='timestamp' style='text-align:right'>${timestampConverter(item.timestamp)}</span>
           </div>`;
       }
     });
@@ -283,26 +299,83 @@ function personalChat(chatWithWhomId)
         {
             withWhomId = chatWithWhomId;
             console.log("PersonalChat")
-            location.href = 'https://socio-app-y5og.onrender.com/chats/<%= id %>cHaT'+chatWithWhomId;
+            location.href = 'http://localhost:3001/chats/<%= id %>cHaT'+chatWithWhomId;
         }
         socket.emit('private-message',{receiver:extractedInfo,sender:extractedInfo2});
-        function sendMsg() {
-//e.preventDefault();
-
-            const messageInput = document.getElementById("message").value;
-            console.log(messageInput);
-            document.getElementById("message").value = '';
-            chatArea.innerHTML += ` <div class="message sent">
-                <p>${messageInput}</p>
-                     </div>`;
-console.log('Chat ID from server is returned: <%= chatId %>');
-        if(messageInput !== '')
-        socket.emit('message',messageInput);
-    scrollToBottom();
-        }
-        
       
-       
+        
+//         const messageInput = document.getElementById("message").value;
+//             console.log(messageInput);
+//             document.getElementById("message").value = '';
+//             chatArea.innerHTML += ` <div class="message sent">
+//                 <p>${messageInput}</p>
+//                      </div>`;
+// console.log('Chat ID from server is returned: <%= chatId %>');
+//         if(messageInput !== '')
+//         socket.emit('message',messageInput);
+//     scrollToBottom();      
+const submit = async () => {
+    const sendButton = document.getElementById("sendButton");
+    const loader = document.getElementById("loader");
+    const buttonContent = document.getElementById("buttonContent");
+    
+    buttonContent.style.display = "none"; // Hide the "Send" text
+    loader.style.display = "inline-block"; // Show the loader icon
+
+    const message = document.getElementById("message").value;
+    console.log('yo done');
+    console.log(extractedInfo2, extractedInfo); // 2 is sender
+
+    try {
+        const response = await fetch('http://localhost:3001/chatReceiver', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ sender: extractedInfo2, receiver: extractedInfo, message: message })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
+
+        const realData = await response.json();
+        console.log(realData);
+        chatAreaUpdate = document.querySelector('.chat-area');
+        chatAreaUpdate.innerHTML += `<div class='message sent'><p>${realData.data.message}</p>
+            <span class='timestamp'> ${timestampConverter(realData.data.timestamp)}</span>
+           </div>`;
+        socket.emit('newChat', realData.data);
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+
+    // Reset button and input after fetching data
+    buttonContent.style.display = "inline-block"; // Show the "Send" text
+    loader.style.display = "none"; // Hide the loader icon
+    document.getElementById("message").value = '';
+    scrollToBottom()
+}
+
+                    socket.on('loadNewChat',(data)=>{
+                        console.log('sender:',extractedInfo2)
+                        console.log('receiver:',extractedInfo)
+                        console.log('Load New Chat Event Fired.......:',data)
+                        if(extractedInfo2 === data.receiver && extractedInfo === data.sender)
+                        {
+                            console.log('Proceed')
+                            chatAreaUpdate2 = document.querySelector('.chat-area');
+    chatAreaUpdate2.innerHTML += `<div class='message received'><p>${data.message}</p><span class='timestamp'>${timestampConverter(data.timestamp)}</span></div>`;
+                        }
+    scrollToBottom()
+
+                    })
+                    function timestampConverter(timestamp)
+                    {
+                        const date = new Date(timestamp);
+const formattedTime = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+return formattedTime;
+                    }
     </script>
 
 </body>

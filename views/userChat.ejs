@@ -303,6 +303,17 @@ socket.on('previous-messages', (data) => {
 socket.emit('joinRoom',extractedInfo2+extractedInfo);
 function personalChat(chatWithWhomId)
         {
+const isMobile = window.matchMedia("screen and (max-width: 768px)").matches;
+    
+    // Check if it's a mobile or tablet screen
+    if (isMobile) {
+        const leftSection = document.querySelector('.left');
+        const rightSection = document.querySelector('.right');
+
+        // Hide the left section and show the right section
+        leftSection.style.display = 'none';
+        rightSection.style.display = 'flex';
+    }
             withWhomId = chatWithWhomId;
             console.log("PersonalChat")
             location.href = 'https://socio-app-y5og.onrender.com/chats/<%= id %>cHaT'+chatWithWhomId;

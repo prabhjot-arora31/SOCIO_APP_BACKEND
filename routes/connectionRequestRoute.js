@@ -41,7 +41,7 @@ router.post("/send-request", async (req, res) => {
     console.log("Notification:(after sending request) " + notification);
     await notification.save();
 
-    res.redirect("http://localhost:3001/users/");
+    res.redirect("https://socio-app-y5og.onrender.com/users/");
   } catch (error) {
     console.log("Error: " + error.message);
     res.status(500).send("Internal Server Error");

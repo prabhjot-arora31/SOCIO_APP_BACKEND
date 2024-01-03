@@ -18,21 +18,21 @@
       
      </header>
    
-<form action="https://socio-app-y5og.onrender.com/login" method="post">
-    <h2 style="text-align: center;">
+<form action="http://localhost:3001/login" method="post">
+    <h2 style="text-align: center;text-decoration: underline;">
 
         User Login
     </h2> 
 
-<div>
+<div class="inner-fields">
     <label for="email">Enter Email</label>
     <input type="email" name="email" id="email" required>
-</div><div>
+</div><div class="inner-fields">
     <label for="password">Enter Password</label>
     <input type="password" name="password" id="password" required>
-</div><div>
-    <input type="submit" value="Login">
-    <a href="/index.html" style="background-color: black; color: white; text-decoration: none; padding: 0.4rem; ">Register</a>
+</div><div  style="display: flex; flex-direction: column;  ">
+    <input type="submit" value="Login" style="border: none;border-radius: 20px;">
+    <a href="/index.html" style=" border-radius: 20px; border: 1px solid white  ;color: white; font-weight: bold;  font-size: 16.3px; text-decoration: none; padding: 0.4rem; ">Register</a>
 
 </div>
 </form>

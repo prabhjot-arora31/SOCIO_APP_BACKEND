@@ -11,7 +11,7 @@ button {
   font-size: 16.5px;
 }
 header {
-  background-color: black;
+  background-color: #654320;
   color: white;
   display: flex;
   padding: 0.6rem;
@@ -22,13 +22,26 @@ header {
   margin-bottom: 20px;
   height: 90px;
 }
+.inner-fields {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.inner-fields input {
+  font-size: 15.6px;
+}
 form {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 350px;
+  border-radius: 20px;
+  /* align-items: center; */
+  justify-content: center;
   gap: 1.03rem;
   margin-left: auto;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
+  background-color: #96613d;
+  color: #fff;
   padding: 0.5rem;
   margin-right: auto;
 }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <audio src="./message_receive.mp3"></audio>
+    <button>Play</button>
+    <script>
+        function playSound(){
+            document.getElementsByTagName("audio")[0].play();
+        }
+        document.getElementsByTagName('button')[0].addEventListener('click',()=>{
+            playSound();
+        });
+    </script>
+</body>
+</html>

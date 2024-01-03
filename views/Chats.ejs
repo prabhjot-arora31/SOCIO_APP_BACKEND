@@ -13,7 +13,7 @@
   /* color: red; */
 }
 header{
-    background-color: black;
+    background-color: #706EE3;
     color: white;
     display: flex;
     padding: 1.2rem;
@@ -180,7 +180,7 @@ header{
         </h2>
         <h4>
 
-            <a style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="https://socio-app-y5og.onrender.com/home/<%= id %>">Home</a>
+            <a style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="http://localhost:3001/home/<%= id %>">Home</a>
         </h4>
     </header>
     <div class="main">
@@ -214,7 +214,7 @@ header{
         function personalChat(chatWithWhomId)
         {
             console.log("PersonalChat")
-            location.href = 'https://socio-app-y5og.onrender.com/chats/<%= id %>cHaT'+chatWithWhomId;
+            location.href = 'http://localhost:3001/chats/<%= id %>cHaT'+chatWithWhomId;
         }
         const socket = io('/chats'); // Connect to Socket.IO server
         data = 'Hello man';

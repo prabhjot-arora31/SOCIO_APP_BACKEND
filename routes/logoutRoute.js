@@ -4,7 +4,7 @@ router.get("/logout", (req, res) => {
     if (err) {
       res.status(500).send("Logout failed");
     } else {
-      res.redirect("https://socio-app-y5og.onrender.com/");
+      res.redirect("http://localhost:3001/");
     }
   });
 });

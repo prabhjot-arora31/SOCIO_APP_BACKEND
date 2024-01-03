@@ -19,34 +19,35 @@
      
     </header>
    
-<form action="https://socio-app-y5og.onrender.com/register" method="post">
-    <h2 style="text-align: center;">
+<form action="http://localhost:3001/register" method="post">
+    <h2 style="text-align: center;margin-bottom: 20px; text-decoration: underline; ">
 
         User Registration
     </h2> 
-<div>
+<div class="inner-fields">
     <label for="name">Enter Name</label>
     <input type="text" name="name" id="name" required>
 </div>
-<div>
+<div class="inner-fields">
     <label for="email">Enter Email</label>
     <input type="email" name="email" id="email" required>
-</div><div>
+</div><div class="inner-fields">
     <label for="password">Enter Password</label>
     <input type="password" name="password" id="password" required>
-</div><div>
+</div><div class="inner-fields">
     <label for="desc">Enter About Yourself</label>
     <!-- <input type="text" name="name" id="name"> -->
     <textarea name="desc" id="desc" cols="30" rows="10"></textarea>
 </div>
-<div>
+<div class="inner-fields">
     <label for="desc">Enter Your Profile URL</label>
     <!-- <input type="text" name="name" id="name"> -->
     <input type="text" name="profileImg" id="profileImg">
 </div>
-<div>
-    <input type="submit" value="Register" >
-    <a href="/login.html" style="background-color: black; color: white; text-decoration: none; padding: 0.4rem; ">Login</a>
+<div style="display: flex; flex-direction: column;  ">
+    <input type="submit" value="Register" style="border: none;border-radius: 20px;">
+    <!-- <br/> -->
+    <a href="/login.html" style=" border-radius: 20px; border: 1px solid white  ;color: white; font-weight: bold;  font-size: 16.3px; text-decoration: none; padding: 0.4rem; ">Login</a>
 </div>
 </form>
 </body>

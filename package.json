@@ -4,7 +4,7 @@
   "description": "This is a backend services of socio app developed and maintained by PRABHJOT ARORA",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index",
     "dev": "nodemon index.js",
     "build": "npm run build"
   },

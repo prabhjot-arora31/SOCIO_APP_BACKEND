@@ -42,3 +42,4 @@ app.use("/", require("./routes/chatReceiver"));
 httpServer.listen(3001, () => {
   console.log("Listening on the port 3001");
 });
+module.exports = httpServer;

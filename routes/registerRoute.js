@@ -26,7 +26,7 @@ router.post("/register", async function (req, res) {
         await tmpUser.save();
         console.log(tmpUser);
         res.send(
-          "<center>User registered successfully<br/><a href='https://socio-app-y5og.onrender.com/login.html'>Login</a></center>"
+          "<center>User registered successfully<br/><a href='https://socio-app-backend-nine.vercel.app/login.html'>Login</a></center>"
         );
       }
     });

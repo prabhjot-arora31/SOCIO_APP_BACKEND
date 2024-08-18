@@ -11,7 +11,7 @@ function authenticateUser(req, res, next) {
     res.status(401).send("Unauthorized");
   }
 }
-router.get("/home/:id/", authenticateUser, async (req, res) => {
+router.get("/home/:id/", async (req, res) => {
   try {
     // const id = req.params.id;
     const id = req.session.user._id;

@@ -16,6 +16,7 @@ app.use(
     secret: "hfguiO97$$#@175eREE6^2vG", // Change this to a secure random string
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: true } 
   })
 );
 app.use(express.json());

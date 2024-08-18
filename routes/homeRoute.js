@@ -13,8 +13,8 @@ function authenticateUser(req, res, next) {
 }
 router.get("/home/:id/", async (req, res) => {
   try {
-    // const id = req.params.id;
-    const id = req.session.user._id;
+    const id = req.params.id;
+  //  const id = req.session.user._id;
     console.log(id);
 
     console.log("ID IS:", id);

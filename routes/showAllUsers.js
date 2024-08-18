@@ -12,7 +12,7 @@ function authenticateUser(req, res, next) {
     res.status(401).send("Unauthorized");
   }
 }
-router.get("/users", authenticateUser, async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     console.log("user id: " + req.session.user._id);
     const users = await User.find({ _id: { $ne: req.session.user._id } });

@@ -42,7 +42,7 @@ router.post("/login", async function (req, res) {
         } else {
           if (isMatch) {
             req.session.user = await user;
-            const userData = req.session.user;
+            const userData = await user;
             // res.redirect(
             //   "https://socio-app-y5og.onrender.com/home/" + userData._id
             // );

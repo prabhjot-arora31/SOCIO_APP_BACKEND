@@ -27,7 +27,7 @@ router.post("/login", async function (req, res) {
   }
   const { email, password } = req.body;
   try {
-    const user = User.findOne({ email: email });
+    const user =await User.findOne({ email: email });
 
     if (user) {
       const hashedPassword = await retrieveHashedPassword(email).then(function (
@@ -43,9 +43,6 @@ router.post("/login", async function (req, res) {
           if (isMatch) {
             req.session.user = await user;
             const userData = await user;
-            // res.redirect(
-            //   "https://socio-app-y5og.onrender.com/home/" + userData._id
-            // );
             res.redirect("https://socio-app-backend-nine.vercel.app/home/" + userData._id);
             // res.render("home", { userData });
           } else {

@@ -19,9 +19,9 @@ app.use(
     saveUninitialized: true,
     cookie: { secure: true } ,
     store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,
+    mongoUrl: `${process.env.MONGO_URI}`,
     collectionName: 'sessions',
-  }),
+  })
   })
 );
 app.use(express.json());

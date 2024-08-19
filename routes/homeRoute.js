@@ -26,8 +26,8 @@ router.get("/home/:id/", async (req, res) => {
       // res.render('error.ejs', { errorMessage: 'User not found' });
     } else {
       console.log(id);
-      const userPosts = await Post.find({ "author.userId": id });
-
+    //  const userPosts = await Post.find({ "author.userId": id });
+const userPosts = await Post.find(); // find all posts
       console.log(userPosts);
       res.render("Home.ejs", { userData, userPosts });
     }

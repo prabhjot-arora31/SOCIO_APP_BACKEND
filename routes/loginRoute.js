@@ -41,7 +41,7 @@ router.post("/login", async function (req, res) {
           console.log("Error occured while comparing");
         } else {
           if (isMatch) {
-            req.session.user = await user;
+            req.session.user = user;
             const userData = await user;
             res.redirect("https://socio-app-backend-nine.vercel.app/home/" + userData._id);
             // res.render("home", { userData });

@@ -12,19 +12,19 @@ function authenticateUser(req, res, next) {
     res.status(401).send("Unauthorized");
   }
 }
-router.get("/users", async (req, res) => {
+router.get("/:id/users", async (req, res) => {
   try {
-    console.log("user id: " + req.session.user._id);
-    const users = await User.find({ _id: { $ne: req.session.user._id } });
+    console.log("user id: " + req.params.id);
+    const users = await User.find({ _id: { $ne: req.params.id } });
     const relation = await relationship
-      .find({ follower: req.session.user._id })
+      .find({ follower: req.params.id })
       .populate("followed", "name profileImg") // Populate the followed user's name
       .exec();
     console.log("from showAllUsers.js:", users);
 
     res.render(path.join(__dirname, "../views/users.ejs"), {
       users: users,
-      id: req.session.user._id,
+      id: req.params.id,
       relation: relation,
     });
   } catch (err) {

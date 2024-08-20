@@ -3,13 +3,13 @@ const Relationship = require("../model/relationship");
 const User = require("../model/users");
 
 router.get(
-  "/chats",
+  "/:id/chats",
 
   async (req, res) => {
     try {
-      console.log("user is: ", req.session.user);
-      const loggedInUserId = req.session.user._id;
-      
+      // console.log("user is: ", req.session.user);
+      const loggedInUserId = req.params.id;
+
       // Find relationships where the logged-in user is involved and status is "Accepted"
       const acceptedRelationships = await Relationship.find({
         $or: [
@@ -29,6 +29,7 @@ router.get(
 
       // Fetch users with the filtered IDs
       const users = await User.find({ _id: { $in: userIds } });
+      console.log("users are:", users);
       res.render("Chats.ejs", { id: loggedInUserId, user: users });
     } catch (error) {
       console.error("Error fetching chats:", error);

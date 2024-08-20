@@ -4,21 +4,21 @@ const Relationship = require("../model/relationship");
 const User = require("../model/users");
 router.get(
   "/chats/:chatId",
-  async (req, res, next) => {
-    if (req.session && req.session.user) {
-      // Assuming session-based authentication
-      // User is authenticated, allow access to the route
-      next();
-    } else {
-      // User is not authenticated, redirect to login page or send unauthorized response
-      res.status(401).send("Unauthorized");
-    }
-  },
+  // async (req, res, next) => {
+  //   if (req.session && req.session.user) {
+  //     // Assuming session-based authentication
+  //     // User is authenticated, allow access to the route
+  //     next();
+  //   } else {
+  //     // User is not authenticated, redirect to login page or send unauthorized response
+  //     res.status(401).send("Unauthorized");
+  //   }
+  // },
   async function (req, res) {
     const chatId = req.params.chatId;
     console.log("Chat ID: " + chatId);
-    const loggedInUserId = req.session.user._id;
-
+    const loggedInUserId = req.params.id;
+    console.log("IN USERCHAT.JS: chatId", chatId);
     // Find relationships where the logged-in user is involved and status is "Accepted"
     const acceptedRelationships = await Relationship.find({
       $or: [

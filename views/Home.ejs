@@ -14,7 +14,7 @@
     /* overflow-x: hidden; */
 }
 header{
-  background-color: #654320;
+  background-color: #706EE3;
     color: white;
     display: flex;
     padding: 1.2rem;
@@ -44,7 +44,7 @@ header{
     /* margin: 25px; */
     /* margin-left: 20px; */
     /* border: 2px solid black; */
-  background-color: #96613d;
+  background-color: #706EE3;
 
   color: #fff;
     scrollbar-width: none; /* For Firefox */
@@ -105,14 +105,14 @@ header{
 .actions a{
     text-decoration: none;
     padding: 0.6rem;
-    background-color: #654320;
+    background-color: #706EE3;
         color: #fff;
         transition: 7.24s linear ease;
 }
 .actions a:hover{
     background-color: white;
-    border: 2px solid #654320;
-    color:  #654320;
+    border: 2px solid #706EE3;
+    color:  #706EE3;
 }
 .top{
     display: flex;
@@ -313,11 +313,11 @@ span h3{
                         </div>
                     </div>
                     <div class="actions">
-                        <a href="">Update Profile</a>
+                        <!-- <a href="">Update Profile</a> -->
                         <a id="del-acc" style="cursor: pointer;">Delete Account</a>
-                        <a href="https://socio-app-backend-nine.vercel.app/users">Connect to Users</a>
-                        <a href="#">Following</a>
-                        <a href="https://socio-app-backend-nine.vercel.app/chats">Chats</a>
+                        <a href="#" id="ctu">Connect to Users</a>
+                        <!-- <a href="#">Following</a> -->
+                        <a href="#" id="chats">Chats</a>
                     </div>
             </div>
             <div class="right">
@@ -335,16 +335,16 @@ span h3{
                 <% if (userPosts.length > 0) { %>
                    
                         <% userPosts.forEach(post => { %>
-                           <div class="post-data-box" style=" margin-left: auto; margin-right: auto; margin-bottom: 20px; display: flex; justify-content: center;flex-direction: column; align-items: center; border: 2px solid black; padding: 0.65rem;  ">
+                           <div class="post-data-box" style=" margin-left: auto; margin-right: auto; margin-bottom: 20px; border: 2px solid black; padding: 0.65rem;">
                             
-                           <div>
-                            <div style="display: flex; gap: 9px; align-items: center;">
+                           <div >
+                            <div style="display: flex; gap: 9px; align-items: center; justify-content: center;">
     
-                                
-                                <h4 style="position: relative; top: 9px; "> <%= post.author.username %> </h4>
+                              <img src="<%= userData.profileImg %>" style="max-width: 30px;border-radius: 30px;"/>  
+                                <h4 style="position: relative;"> <%= userData.name %> </h4>
                             </div>
     
-                    <div style="display: flex; gap: 8px; flex-direction: column;">
+                    <div style="display: flex; gap: 8px; flex-direction: column;align-items: center;">
                         <p style="margin-bottom: 10px;text-align: left; font-size: 13px; margin-top: 10px;"><%= post.postDesc %></p>
                                 <div style=" display: flex; justify-content: center; margin-left: auto; margin-right: auto;   " class="post-image">
                                 <img style="width: 100%;" src="<%= post.imageUrl %>" alt="">
@@ -378,6 +378,12 @@ span h3{
         </div>
     </div>
     <script>
+
+        const chats = document.getElementById('chats')
+        const ctu = document.getElementById('ctu')
+        const id = localStorage.getItem('userId')
+        chats.href =   `https://socio-app-backend-nine.vercel.app/${id}/chats`
+        ctu.href = `https://socio-app-backend-nine.vercel.app/${id}/users`
         function sendRequestReject(senderId) {
     console.log('rejected from', senderId);
     fetch('https://socio-app-backend-nine.vercel.app/reject-connection', {
@@ -580,7 +586,7 @@ allElements.forEach(element => {
             create_main_div.style.flexDirection = 'column';
 create_main_div.style.gap = "15px";
 const h4 = document.createElement('h4');
-h4.innerHTML = '<p style="color:brown">Are you sure you want to delete your Account?</p>';
+h4.innerHTML = '<p style="color:green">Are you sure you want to delete your Account?</p>';
 h4.style.textAlign = 'center';
 const deleteOrNot = document.createElement('div');
 deleteOrNot.style.display = 'flex';
@@ -680,7 +686,7 @@ create_main_div.style.gap = "15px";
             const addPost = document.createElement('button');
             addPost.style.border = 'none'
             addPost.style.cursor = ' pointer';
-            addPost.style.backgroundColor = '#654320';
+            addPost.style.backgroundColor = '#706EE3';
             addPost.innerText = 'Add Post';
            
     //         text-decoration: none;

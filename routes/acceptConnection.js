@@ -12,7 +12,7 @@ router.post("/accept-connection", async function (req, res) {
       { new: true }
     );
     const notification = await Notification.findOneAndUpdate(
-      { senderId: whoseId, recipientId: id },
+      { senderId: whoseId.slice(0, 24), recipientId: id },
       { $set: { status: "Accepted" } },
       { new: true }
     );

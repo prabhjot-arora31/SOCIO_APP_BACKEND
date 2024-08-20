@@ -56,15 +56,12 @@
             // Parse the response
             const data = await response.json();
             console.log('data is:',data)
-            if (response.ok) {
+            
                 // Store the user ID in localStorage
                 localStorage.setItem('userId', data.user._id);
     
                 // Redirect to home page or do something else
-                window.location.href = `/home/${data.user._id}`;
-            } else {
-                alert('Login failed: ' + data.message);
-            }
+                window.location.href = `/home/${data.user._id}`
         } catch (error) {
             console.error('Error during login:', error);
             alert('An error occurred during login.');

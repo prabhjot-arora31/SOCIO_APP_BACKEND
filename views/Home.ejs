@@ -290,7 +290,7 @@ span h3{
         </h2>
         <h4>
 
-            <a id="logout" style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="http://localhost:3001/logout">Logout</a>
+            <a id="logout" style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="https://socio-app-backend-nine.vercel.app/logout">Logout</a>
         </h4>
     </header>
     <div style="display: flex; justify-content: center;">
@@ -315,9 +315,9 @@ span h3{
                     <div class="actions">
                         <a href="">Update Profile</a>
                         <a id="del-acc" style="cursor: pointer;">Delete Account</a>
-                        <a href="http://localhost:3001/users">Connect to Users</a>
+                        <a href="https://socio-app-backend-nine.vercel.app/users">Connect to Users</a>
                         <a href="#">Following</a>
-                        <a href="http://localhost:3001/chats">Chats</a>
+                        <a href="https://socio-app-backend-nine.vercel.app/chats">Chats</a>
                     </div>
             </div>
             <div class="right">
@@ -380,7 +380,7 @@ span h3{
     <script>
         function sendRequestReject(senderId) {
     console.log('rejected from', senderId);
-    fetch('http://localhost:3001/reject-connection', {
+    fetch('https://socio-app-backend-nine.vercel.app/reject-connection', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -401,7 +401,7 @@ span h3{
 
          function sendRequest(senderId) {
     console.log('accepted from', senderId);
-    fetch('http://localhost:3001/accept-connection', {
+    fetch('https://socio-app-backend-nine.vercel.app/accept-connection', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -445,7 +445,7 @@ span h3{
                     <div class="loading-spinner" style="width: 140px; margin: 0 auto;">
                         <img style="width: 100%; height: auto;" src="/loading.gif" alt="Loading...">
                     </div>`;
-             fetch('http://localhost:3001/pending-requests')
+             fetch('https://socio-app-backend-nine.vercel.app/pending-requests')
                 .then(response => response.json())
                 .then(async data => {
                     console.log(data)
@@ -472,7 +472,7 @@ span h3{
                         notificationsDiv.appendChild(noNotificationsElement);
                     } else {
                         const userPromises = data.map(notification => {
-                            return fetch(`http://localhost:3001/user/${notification.senderId._id}`)
+                            return fetch(`https://socio-app-backend-nine.vercel.app/user/${notification.senderId._id}`)
                                 .then(response => response.json());
                         });
 
@@ -544,7 +544,7 @@ allElements.forEach(element => {
             document.getElementsByClassName("main")[0].style.overflowX = 'hidden';
 
             const create_main_div = document.createElement("form");
-            create_main_div.action = "http://localhost:3001/delete-account/<%= userData._id %>"
+            create_main_div.action = "https://socio-app-backend-nine.vercel.app/delete-account/<%= userData._id %>"
             create_main_div.method = "POST";
             create_main_div.style.opacity = "1";
             document.getElementsByTagName("body")[0].style.display = 'flex';
@@ -631,7 +631,7 @@ allElements.forEach(element => {
 });
             document.getElementsByClassName("main")[0].style.opacity = "0";
             const create_main_div = document.createElement("form");
-            create_main_div.action = "http://localhost:3001/create-post"
+            create_main_div.action = "https://socio-app-backend-nine.vercel.app/create-post"
             create_main_div.method = "POST";
             create_main_div.style.opacity = "1";
             document.getElementsByTagName("body")[0].style.display = 'flex';

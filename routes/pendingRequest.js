@@ -37,7 +37,7 @@ async function isImageURL(url) {
 }
 
 // Express route to handle fetching pending connection requests
-router.get("/pending-requests/id", async (req, res) => {
+router.get("/pending-requests/:id", async (req, res) => {
   try {
     const notifications = await Notification.find({
       recipientId: req.params.id,

@@ -16,7 +16,7 @@ router.post("/delete-account/:id", authenticateUser, async function (req, res) {
   console.log("User id to delete:", account_id);
   const user = await User.findOneAndDelete({ _id: account_id });
   if (user) {
-    res.redirect("http://localhost:3001/index.html");
+    res.redirect("https://socio-app-backend-nine.vercel.app/index.html");
   } else {
     return res.status(404).send("User not found");
   }

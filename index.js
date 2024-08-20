@@ -17,7 +17,7 @@ app.use(
     secret: "hfguiO97$$#@175eREE6^2vG", // Change this to a secure random string
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false },
+    cookie: { secure: true },
     store: MongoStore.create({
       mongoUrl: `${process.env.MONGO_URI}`,
       collectionName: "sessions",

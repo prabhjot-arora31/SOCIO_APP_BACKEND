@@ -53,7 +53,7 @@ router.post("/login", async function (req, res) {
               console.log("session saved!!");
               console.log("the session is:", req.session);
               const userData = user;
-              res.redirect("http://localhost:3001/home/" + userData._id);
+              res.redirect("https://socio-app-backend-nine.vercel.app/home/" + userData._id);
             });
             // res.render("home", { userData });
           } else {

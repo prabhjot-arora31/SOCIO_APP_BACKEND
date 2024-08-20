@@ -184,7 +184,7 @@ header{
         </h2>
         <h4>
 
-            <a style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="https://socio-app-backend-nine.vercel.app/home/<%= id %>">Home</a>
+            <a style="text-decoration: none; color:  white; border: 2px solid white ; padding: 0.5rem; overflow: hidden; " href="http://localhost:3001/home/<%= id %>">Home</a>
         </h4>
     </header>
     <div class="main">
@@ -247,7 +247,7 @@ function scrollToBottom() {
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 function getProfilePicOfReceiver(){
-            fetch('https://socio-app-backend-nine.vercel.app/getProfilePic/'+extractedInfo).then((data)=>{
+            fetch('http://localhost:3001/getProfilePic/'+extractedInfo).then((data)=>{
             //   console.log('DATA IS HERE:', data.json())
             return data.json();
             }).then((data)=>{
@@ -296,7 +296,7 @@ function personalChat(chatWithWhomId)
         {
             withWhomId = chatWithWhomId;
             console.log("PersonalChat")
-            location.href = 'https://socio-app-backend-nine.vercel.app/chats/<%= id %>cHaT'+chatWithWhomId;
+            location.href = 'http://localhost:3001/chats/<%= id %>cHaT'+chatWithWhomId;
         }
         socket.emit('private-message',{receiver:extractedInfo,sender:extractedInfo2});
       
@@ -324,7 +324,7 @@ const submit = async () => {
    // console.log(extractedInfo2, extractedInfo); // 2 is sender
 
     try {
-        const response = await fetch('https://socio-app-backend-nine.vercel.app/chatReceiver', {
+        const response = await fetch('http://localhost:3001/chatReceiver', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

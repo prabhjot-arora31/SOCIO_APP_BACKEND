@@ -2,6 +2,8 @@ const path = require("path");
 const User = require("../model/users");
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
+var LocalStorage = require("node-localstorage").LocalStorage;
+var localStorage = new LocalStorage("./scratch");
 router.get("/login", function (req, res) {
   res.sendFile(path.join(__dirname, "/views/login.html"));
 });
@@ -27,7 +29,7 @@ router.post("/login", async function (req, res) {
   }
   const { email, password } = req.body;
   try {
-    const user =await User.findOne({ email: email });
+    const user = await User.findOne({ email: email });
 
     if (user) {
       const hashedPassword = await retrieveHashedPassword(email).then(function (
@@ -41,9 +43,18 @@ router.post("/login", async function (req, res) {
           console.log("Error occured while comparing");
         } else {
           if (isMatch) {
+            localStorage.setItem("user", user);
             req.session.user = user;
-            const userData = await user;
-            res.redirect("https://socio-app-backend-nine.vercel.app/home/" + userData._id);
+            req.session.save(function (err) {
+              if (err) {
+                console.log("Error saving session:", err);
+                return res.status(500).send("Error saving session");
+              }
+              console.log("session saved!!");
+              console.log("the session is:", req.session);
+              const userData = user;
+              res.redirect("http://localhost:3001/home/" + userData._id);
+            });
             // res.render("home", { userData });
           } else {
             res.send("Login failed");

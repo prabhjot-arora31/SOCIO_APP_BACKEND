@@ -1,0 +1,13 @@
+[build]
+  # Specify your build command
+  command = "npm run build"
+
+  # Specify the directory to publish after building
+  publish = "public"
+
+[[redirects]]
+  # Redirects if needed
+  
+[[functions]]
+  # Specify the directory where Netlify should look for your functions
+  directory = "functions"

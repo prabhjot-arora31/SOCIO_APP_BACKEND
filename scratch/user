@@ -1,0 +1,9 @@
+{
+  _id: new ObjectId('66bca4b7d516005b70cf85d9'),
+  name: 'Anmol',
+  profileImg: 'https://jscalci31.netlify.app/profile.jpg',
+  email: 'anmolarora3112@gmail.com',
+  password: '$2b$10$mOZZQ4Yzvw7IClGk6JyCtuZGgCAx.obbCBco2Zewdw0to9k3mtRd.',
+  description: 'I am a developer',
+  __v: 0
+}

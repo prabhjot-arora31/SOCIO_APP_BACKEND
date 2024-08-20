@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const app = express();
-const MongoStore = require('connect-mongo');
+const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const httpServer = require("http").createServer(app);
 // const io = require("socket.io")(httpServer);
@@ -17,11 +17,11 @@ app.use(
     secret: "hfguiO97$$#@175eREE6^2vG", // Change this to a secure random string
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true } ,
+    cookie: { secure: false },
     store: MongoStore.create({
-    mongoUrl: `${process.env.MONGO_URI}`,
-    collectionName: 'sessions',
-  })
+      mongoUrl: `${process.env.MONGO_URI}`,
+      collectionName: "sessions",
+    }),
   })
 );
 app.use(express.json());

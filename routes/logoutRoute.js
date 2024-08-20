@@ -4,7 +4,7 @@ router.get("/logout", (req, res) => {
     if (err) {
       res.status(500).send("Logout failed");
     } else {
-      res.redirect("https://socio-app-backend-nine.vercel.app/index.html");
+      res.redirect("http://localhost:3001/index.html");
     }
   });
 });

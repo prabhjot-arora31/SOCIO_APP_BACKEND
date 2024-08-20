@@ -451,7 +451,7 @@ span h3{
                     <div class="loading-spinner" style="width: 140px; margin: 0 auto;">
                         <img style="width: 100%; height: auto;" src="/loading.gif" alt="Loading...">
                     </div>`;
-             fetch('https://socio-app-backend-nine.vercel.app/pending-requests')
+             fetch('https://socio-app-backend-nine.vercel.app/pending-requests/'+localStorage.getItem('userId'))
                 .then(response => response.json())
                 .then(async data => {
                     console.log(data)

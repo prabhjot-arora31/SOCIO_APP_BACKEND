@@ -2,8 +2,8 @@ const path = require("path");
 const User = require("../model/users");
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
-var LocalStorage = require("node-localstorage").LocalStorage;
-var localStorage = new LocalStorage("./scratch");
+// var LocalStorage = require("node-localstorage").LocalStorage;
+// var localStorage = new LocalStorage("./scratch");
 router.get("/login", function (req, res) {
   res.sendFile(path.join(__dirname, "/views/login.html"));
 });
@@ -43,7 +43,7 @@ router.post("/login", async function (req, res) {
           console.log("Error occured while comparing");
         } else {
           if (isMatch) {
-            localStorage.setItem("user", user);
+            // localStorage.setItem("user", user);
             req.session.user = user;
             req.session.save(function (err) {
               if (err) {
@@ -53,7 +53,9 @@ router.post("/login", async function (req, res) {
               console.log("session saved!!");
               console.log("the session is:", req.session);
               const userData = user;
-              res.redirect("https://socio-app-backend-nine.vercel.app/home/" + userData._id);
+              res.redirect(
+                "https://socio-app-backend-nine.vercel.app/home/" + userData._id
+              );
             });
             // res.render("home", { userData });
           } else {

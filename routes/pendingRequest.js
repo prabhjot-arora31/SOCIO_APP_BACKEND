@@ -37,10 +37,10 @@ async function isImageURL(url) {
 }
 
 // Express route to handle fetching pending connection requests
-router.get("/pending-requests", async (req, res) => {
+router.get("/pending-requests/id", async (req, res) => {
   try {
     const notifications = await Notification.find({
-      recipientId: req.session.user._id,
+      recipientId: req.params.id,
       status: "Pending",
     })
       .populate("senderId", "name profileImg") // Populate senderId field with the name and profileImg of the sender

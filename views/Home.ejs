@@ -315,9 +315,10 @@ span h3{
                     <div class="actions">
                         <!-- <a href="">Update Profile</a> -->
                         <a id="del-acc" style="cursor: pointer;">Delete Account</a>
-                        <a id="ctu">Connect to Users</a>
+                        
                         <!-- <a href="#">Following</a> -->
                         <a id="chats">Chats</a>
+<a id="ctu">Connect to Users</a>
                     </div>
             </div>
             <div class="right">
@@ -383,7 +384,10 @@ span h3{
         const ctu = document.getElementById('ctu')
         const id = localStorage.getItem('userId')
         chats.href =   `https://socio-app-backend-nine.vercel.app/${id}/chats`
-        ctu.href = `https://socio-app-backend-nine.vercel.app/${id}/users`
+       // ctu.href = `https://socio-app-backend-nine.vercel.app/${id}/users`
+ctu.addEventListener('click',()=>{
+window.location = `https://socio-app-backend-nine.vercel.app/${id}/users`
+})
         function sendRequestReject(senderId) {
     console.log('rejected from', senderId);
     fetch('https://socio-app-backend-nine.vercel.app/reject-connection', {

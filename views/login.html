@@ -6,7 +6,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="index.css">
 </head>
-<body>
+<body onload="abc()">
     <header>
         <div class="logo">
          <img src="logo.png" alt="Logo Image">
@@ -36,6 +36,12 @@
 </div>
 </form>
 <script>
+    const abc = ()=>{
+        if(localStorage.getItem('userId'))
+        {
+            window.location = `https://socio-app-backend-nine.vercel.app/home/${localStorage.getItem('userId')}`
+        }
+    }
     document.getElementById('loginForm').onsubmit = async function(event) {
         event.preventDefault(); // Prevent the form from submitting the traditional way
     
